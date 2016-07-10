@@ -9,6 +9,7 @@ class SessionsController < ApplicationController
     #params[:session][:password]: sumitted password
       # Log the user in and redirect to the user's show page.
       log_in user
+      params[:session][:remember_me] == '1' ? remember(user) : forget(user)
       redirect_to current_user
 
     else
@@ -20,8 +21,7 @@ class SessionsController < ApplicationController
   end
 
   def destroy
-  	log_out
+  	log_out if logged_in?
     redirect_to root_url
-
   end
 end
